@@ -1,0 +1,21 @@
+<!-- <div ng-controller="TodosCtrl">
+  <h1>Todos</h1>
+
+  <form ng-submit="addTodo($event)">
+    <input type="text" class="form-control" ng-model="nextTodo" placeholder="Add a todo...">
+  </form>
+
+  <ul class="todos">
+    <li ng-repeat="todo in todos" ng-class="{complete: todo.complete}">
+      <input type="checkbox" ng-click="toggleComplete(todo)" ng-model="todo.complete"> {{ todo.title }}
+    </li>
+  </ul>
+</div> -->
+
+<div class="container theme-showcase" role="main">
+  <div class="jumbotron">
+    <h1>Hello, welcome to my todos app</h1>
+    <p>Start creating todo <%= link_to "here", todo_path,
+      class: "btn btn-primary" %></p>
+  </div>
+</div>
