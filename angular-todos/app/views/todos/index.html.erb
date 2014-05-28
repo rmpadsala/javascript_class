@@ -1,0 +1,104 @@
+<!-- <h1>Listing todos</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Complete</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @todos.each do |todo| %>
+      <tr>
+        <td><%= todo.title %></td>
+        <td><%= todo.complete %></td>
+        <td><%= link_to 'Show', todo %>
+        <%= link_to 'Edit', edit_todo_path(todo) %>
+        <%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Todo', new_todo_path %> -->
+
+<div class="row">
+  <div class="col-xs-3" ng-controller="GroupsCtrl">
+    <h1>Groups</h1>
+    <div class="list-group todo-group">
+      <a href="#" class="list-group-item" ng-class="{ active: g.id === group.activeGroupId }"
+        ng-repeat="g in group.groups"
+        ng-click="setCurrentGroup($event, g)">
+        {{ g.name }}
+      </a>
+
+      <form ng-submit="addGroup($event)">
+        <input type="text" class="form-control" ng-model="nextGroup"
+          placeholder="Add new group...">
+      </form>
+    </div>
+  </div>
+
+  <div class="col-xs-6" ng-controller="TodosCtrl">
+    <h1>Todos</h1>
+    <form ng-submit="addTodo($event)" ng-show="visible()">
+      <input type="text" class="form-control" ng-model="nextTodo"
+        placeholder="Add new todo...">
+    </form>
+
+    <div class="panel panel-default" ng-show="visible()">
+      <p class="todo-filters-content">
+        All: {{(todos|filter:{todo_group_id: activeGroupId}).length}},
+        Completed: {{(todos|filter:{todo_group_id: activeGroupId, complete: true}).length}}
+      </p>
+      <div class="panel-body">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Todo to search...." ng-model="query">
+          <span class="input-group-btn">
+						<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+					</span>
+        </div>
+
+        <table class="table">
+          <thead></thead>
+          <tbody class="todos">
+            <tr ng-repeat="todo in todos | filter: {todo_group_id: activeGroupId, title: query}">
+              <td ng-class="{complete: todo.complete}">
+                <input type="checkbox" ng-click="toggleComplete(todo)"
+                  ng-model="todo.complete">
+
+                <form ng-submit="editTodo($event, todo)" ng-show="todo.editable" >
+                  <input type="text" class="editable" placeholder="{{todo.title}}"
+                    ng-model="todo.title">
+                </form>
+
+                <span ng-show="!todo.editable">{{todo.title}}</span>
+              </td>
+    <!--  Q: how to make show link work here. -->
+              <td>
+                <%= link_to "", "#", ng_click: "toggleEditable($event, todo)",
+                  class: "glyphicon glyphicon-pencil" %>
+                <%= link_to "", "#", ng_click: "removeTodo($event, $index, todo)",
+                  class: "glyphicon glyphicon-remove" %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="debug-information panel panel-default">
+      <div class="panel-heading">Debug Information</div>
+      <div class="panel-body">
+        <h6>todos</h6>
+        <p class="text-info">{{ todos | json}}</p>
+        <h6>group</h6>
+        <p class="text-info">{{ group | json}}</p>
+      </div>
+    </div>
+  </div>
+</div>

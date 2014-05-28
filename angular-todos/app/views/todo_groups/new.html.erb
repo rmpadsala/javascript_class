@@ -1,0 +1,61 @@
+<div class="row">
+  <h1>Todos</h1>
+
+  <div class="col-xs-3" ng-controller="GroupsCtrl">
+    <div class="list-group todo-group">
+      <a href="#" class="list-group-item" ng-repeat="group in group.groups"
+        ng-click="setCurrentGroup($event, group)">
+<!--         <span class="badge">1</span> -->
+        {{ group.name }}
+      </a>
+
+      <form ng-submit="addGroup($event)">
+        <input type="text" class="form-control" ng-model="nextGroup"
+          placeholder="Add a group...">
+      </form>
+
+<!--       <%= link_to "Add Group", "#", class: "btn btn-primary" %> -->
+    </div>
+  </div>
+
+  <div class="col-xs-6" ng-controller="TodosCtrl">
+
+    <form ng-submit="addTodo($event)" ng-show="visible()">
+      <input type="text" class="form-control" ng-model="nextTodo"
+        placeholder="Add a new todo...">
+    </form>
+
+    <table class="table">
+      <thead></thead>
+      <tbody class="todos">
+        <tr ng-repeat="todo in todos" ng-class="{complete: todo.complete}">
+          <td>
+            <input type="checkbox" ng-click="toggleComplete(todo)"
+              ng-model="todo.complete">
+
+            <form ng-submit="editTodo($event, todo)" ng-show="todo.editable" >
+              <input type="text" class="editable" placeholder="{{todo.title}}"
+                ng-model="todo.title">
+            </form>
+
+            <span ng-show="!todo.editable">{{todo.title}}</span>
+          </td>
+          <td>
+  <!-- Q: How to make this work???
+            <%= link_to "", todo_path("{{todo.id}}"),
+              class: "glyphicon glyphicon-eye-open" %>
+  -->
+            <%= link_to "", "#", ng_click: "toggleEditable($event, todo)",
+              class: "glyphicon glyphicon-pencil" %>
+            <%= link_to "", "#", ng_click: "removeTodo($event, $index, todo)",
+              class: "glyphicon glyphicon-remove" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="debug">
+      <p class="text-info">{{ todos | json}}</p>
+    </div>
+  </div>
+</div>
